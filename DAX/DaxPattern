@@ -1,0 +1,60 @@
+1. Last Date With Data 
+
+LastDateWithData =
+CALCULATE (
+MAX ( 'Sales'[Order Date] ),
+REMOVEFILTERS ()
+)
+
+2.YTD
+
+Sales YTD (simple) :=
+CALCULATE (
+[Sales Amount],
+DATESYTD ( 'Date'[Date] )
+)
+
+Sales YTD :=
+IF (
+[LastDateWithData],
+CALCULATE (
+[Sales Amount],
+DATESYTD ( 'Date'[Date] )
+)
+)
+
+Sales Fiscal YTD :=
+IF (
+[LastDateWithData],
+CALCULATE (
+[Sales Amount],
+DATESYTD ( 'Date'[Date], "6-30" )  -- the last day of fiscal year
+)
+)
+
+3. PY
+
+Sales PY :=
+IF (
+[LastDateWithData],
+CALCULATE (
+[Sales Amount],
+CALCULATETABLE (
+DATEADD ( 'Date'[Date], -1, YEAR ), -- same as SAMEPERIODLASTYEAR that use DATEADD internally.
+'Date'[DateWithSales] = TRUE
+)
+)
+)
+
+4. YOY
+
+Sales YOY :=
+VAR ValueCurrentPeriod = [Sales Amount]
+VAR ValuePreviousPeriod = [Sales PY]
+VAR Result =
+IF (
+NOT ISBLANK ( ValueCurrentPeriod ) && NOT ISBLANK ( ValuePreviousPeriod ), -- this condition is easy to ignore but better to have it.
+ValueCurrentPeriod - ValuePreviousPeriod
+)
+RETURN
+Result
