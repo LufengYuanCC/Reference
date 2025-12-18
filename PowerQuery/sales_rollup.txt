@@ -1,0 +1,11 @@
+let
+
+    Source = Csv.Document(Web.Contents("https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/weekly_on_time_performance_bronze/sales_rollup.txt"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]),
+    // Incldued all CSN and Not CSN customers. Sean prepared a mapping table and refresh weekly. (csn roll up )
+    // 
+    #"Use First Row as Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    Custom1 = Table.TransformColumns(#"Use First Row as Headers",{"SAP_CUST_NO", each Text.PadStart(_,10,"0")}),
+    #"Changed Type" = Table.TransformColumnTypes(Custom1,{{"SAP_CUST_NO", type text}}),
+    #"Removed Duplicates" = Table.Distinct(#"Changed Type", {"SAP_CUST_NO"})
+in
+    #"Removed Duplicates"
