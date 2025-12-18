@@ -1,0 +1,55 @@
+------ SharePoint Site
+https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics
+https://cpggpc.sharepoint.com/sites/CPCSPCCustomerExperience
+https://cpggpc.sharepoint.com/sites/CPCSPCCIAPowerBIDashboard
+
+
+------ SharePoint Site Folders
+
+https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/
+
+https://cpggpc.sharepoint.com/sites/CPCSPCCustomerExperience/Shared Documents/Reporting/Verint/PowerBI Development/Data/
+
+
+
+------ Connect to SharePoint Folder
+let
+    Source = SharePoint.Files("https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics", [ApiVersion = 15]),
+    #"Filtered Rows" = Table.SelectRows(Source, each [Folder Path] = "https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/")
+in
+    #"Filtered Rows"
+------ Connect to SharePoint v2
+= SharePoint.Contents("https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics", [ApiVersion = 15])
+
+
+------ Connect to Csv file
+let
+Source = Csv.Document(Web.Contents("https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/Top_100_lanes/OT_and_tickets.txt"),[Delimiter=",", Encoding=1252, QuoteStyle=QuoteStyle.None]),
+#"Use First Row as Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+in 
+#"Use First Row as Headers"
+
+
+let
+Source = Csv.Document(Web.Contents("https://cpggpc.sharepoint.com/sites/CPCSPCCIAPowerBIDashboard/Shared Documents/General/csn_source.csv"),[Delimiter=",", Encoding=1252, QuoteStyle=QuoteStyle.None]),
+#"Use First Row as Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+in 
+#"Use First Row as Headers"
+
+
+-------Connect to Excel file
+Excel.Workbook(Web.Contents("https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/EDW_Calendar/EDW_SEM_VW_DATE_DIM_2022_2023.xlsx"), true,null)[Data]{0}
+Excel.Workbook(Web.Contents("https://cpggpc.sharepoint.com/sites/CPCSPCCustomerExperience/Shared Documents/Reporting/Verint/PowerBI Development/Data/AUDIT_YTD_HGS.xlsx"), true,null)[Data]{0}
+
+
+
+
+-------EDW_SEM_VW_DATE_DIM
+let
+    Source = Excel.Workbook(Web.Contents("https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/EDW_Calendar/EDW_SEM_VW_DATE_DIM_2022_2023.xlsx"), true,null)[Data]{0},
+    #"Changed Type" = Table.TransformColumnTypes(Source,{{"CALENDAR_DATE", type date}, {"CALENDAR_QUARTER", Int64.Type}, {"CALENDAR_MONTH", Int64.Type}, {"CALENDAR_YEAR", Int64.Type}, {"CALENDAR_PERIOD", Int64.Type}, {"DAY_OF_CALENDAR_MONTH", Int64.Type}, {"CALENDAR_WEEK_OF_YEAR", Int64.Type}, {"FISCAL_QUARTER", Int64.Type}, {"FISCAL_MONTH", Int64.Type}, {"FISCAL_YEAR", Int64.Type}, {"FISCAL_PERIOD", Int64.Type}, {"DAY_OF_FISCAL_PERIOD", Int64.Type}, {"FISCAL_WEEK_OF_YEAR", Int64.Type}, {"PROVINCIAL_HOLIDAY_IND", type text}, {"CALENDAR_DAY", Int64.Type}, {"DAYS_TO_CURRENT", Int64.Type}, {"CAL_WEEK_TO_CURRENT", Int64.Type}, {"FISC_YEAR_TO_CURRENT", Int64.Type}, {"FISC_YEAR_WEEK_NUM", Int64.Type}, {"FIRST_CAL_DATE_OF_FISC_WEEK", type date}, {"LAST_CAL_DATE_OF_FISC_WEEK", type date}})
+in
+    #"Changed Type"
+
+-----
+
