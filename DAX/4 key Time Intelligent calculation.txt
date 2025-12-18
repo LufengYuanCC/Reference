@@ -1,0 +1,7 @@
+4 key Time Intelligent calculation:
+
+YTD: DATEYTD | TOTALYTD
+PY: DATEADD | SAMEPERIODLASTYEAR
+PYC: PARALLELPERIOD
+MAT ( Rolling back ): DATESINPERIOD
+
