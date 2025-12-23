@@ -1,0 +1,5 @@
+strRangeStart = Date.ToText (DateTime.Date(RangeStart), [Format = "yyyy-MM-dd"]),
+strRangeEnd = Date.ToText (DateTime.Date(RangeEnd), [Format = "yyyy-MM-dd"]),
+
+
+    Source = Odbc.Query("dsn=PostgreSQL35W", "SELECT ""conversationId"",#(lf)""botId"",""trackingNumber"",""agentConnected"",""feedbackScore"",""vvaFeedbackScore"",""feedbackWasHelpful"",""createdAt"",""createdAtEST""#(lf)FROM public.""Conversation""#(lf)where ""createdAt"">= '"& strRangeStart &"' AND ""createdAt""< '"& strRangeEnd & "';", [CommandTimeout= #duration(0, 3, 0, 0),ConnectionTimeout= #duration(0,0,10,0)]),

@@ -1,0 +1,12 @@
+let
+   Source = SharePoint.Files("https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics", [ApiVersion = 15]),
+    #"Filtered Rows" = Table.SelectRows(Source, each ([Folder Path] = "https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/Multichannel/")),
+    #"EDW_SEM_VW_DATE_DIM_2022_2023 xlsx_https://cpggpc sharepoint com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/Multichannel/" = #"Filtered Rows"{[Name="EDW_SEM_VW_DATE_DIM_2022_2023.xlsx",#"Folder Path"="https://cpggpc.sharepoint.com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/Multichannel/"]}[Content],
+    #"Imported Excel Workbook" = Excel.Workbook(#"EDW_SEM_VW_DATE_DIM_2022_2023 xlsx_https://cpggpc sharepoint com/sites/CPCSPCCustomerCareAnalytics/Shared Documents/Power BI Dashboard/Multichannel/", true
+),
+    Sheet0_Sheet = #"Imported Excel Workbook"{[Item="Sheet0",Kind="Sheet"]}[Data],
+    #"finalDate" = Table.SelectRows(Sheet0_Sheet, each [CALENDAR_YEAR] >= Date.Year(DateTime.LocalNow())-1 and [CALENDAR_YEAR] <= Date.Year(DateTime.LocalNow())),
+    #"Changed Type" = Table.TransformColumnTypes(finalDate,{{"CALENDAR_DATE", type date}, {"CALENDAR_QUARTER", Int64.Type}, {"CALENDAR_MONTH", Int64.Type}, {"CALENDAR_YEAR", Int64.Type}, {"DAY_OF_CALENDAR_MONTH", Int64.Type}, {"CALENDAR_WEEK_OF_YEAR", Int64.Type}, {"FISCAL_QUARTER", Int64.Type}, {"FISCAL_MONTH", Int64.Type}, {"FISCAL_YEAR", Int64.Type}, {"DAY_OF_FISCAL_PERIOD", Int64.Type}, {"CALENDAR_DAY", Int64.Type}, {"DAYS_TO_CURRENT", Int64.Type}, {"CAL_WEEK_TO_CURRENT", Int64.Type}, {"FISC_YEAR_TO_CURRENT", Int64.Type}, {"FISC_YEAR_WEEK_NUM", Int64.Type}, {"FIRST_CAL_DATE_OF_FISC_WEEK", type date}, {"LAST_CAL_DATE_OF_FISC_WEEK", type date}, {"LAST_REFRESH_DTM", type datetime}})
+   
+in
+    #"Changed Type"

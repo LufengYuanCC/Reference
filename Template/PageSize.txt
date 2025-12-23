@@ -1,0 +1,1 @@
+900 * 1800 px might be the max size of PBI App area (* 102% is maximum size for PBI App area, 119% is the max size of screen of 27' monitor full screen model)

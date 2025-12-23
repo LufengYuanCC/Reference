@@ -1,0 +1,14 @@
+Date with Transaction = 
+VAR _minDate = CALCULATE(
+    MIN('NM_matched to WEBI'[DELIV_COMPLETION_DT_EXPECTED]),
+    REMOVEFILTERS()
+)
+VAR _maxDate = CALCULATE(
+    MAX('NM_matched to WEBI'[DELIV_COMPLETION_DT_EXPECTED]),
+    REMOVEFILTERS()
+)
+RETURN
+IF(
+    EDW_Calendar[CALENDAR_DATE] >= _minDate &&
+    EDW_Calendar[CALENDAR_DATE] <= _maxDate, TRUE()
+)

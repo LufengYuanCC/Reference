@@ -1,0 +1,48 @@
+https://colorhunt.co/palettes/dark
+
+https://coolors.co/
+
+https://www.colorhexa.com/
+
+https://color.adobe.com/create/image
+
+https://www.canva.com/colors/color-wheel/
+
+
+
+https://www.color-hex.com/color-palette/109321
+
+
+#25A04C -- Green.
+#B6E0BA -- light Green from Brenda
+
+#107A63 -- green used by fabric
+
+#FF9999 -- Pink
+
+#FFFF00 -- Yellow
+
+#D9E1F2 -- light blue
+
+#F3F1F1 -- grey
+#B3B3B3 -- grey for bar chart
+
+#940780 -- blue for bar chart
+#B3B3B3 -- grey for bar chart
+
+Measure for condition formatting
+
+BG Transparent = "rgbs(255,255,255,0)"
+
+Transparent = "rgba(0,0,0,0)"
+
+
+
+
+
+
+
+
+
+
+

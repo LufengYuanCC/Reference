@@ -1,0 +1,8 @@
+let
+    Source = DateTimeZone.SwitchZone(DateTimeZone.UtcNow(), -5),
+    #"Converted to Table" = #table(1, {{Source}}),
+    #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "DateTime"}}),
+    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "Date", each DateTime.Date([DateTime])),
+    #"Added Custom1" = Table.AddColumn(#"Added Custom", "Time", each DateTime.Time([DateTime]))
+in
+    #"Added Custom1"

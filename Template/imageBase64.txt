@@ -1,0 +1,1 @@
+"data:image;base64, " & Binary.ToText([Content], BinaryEncoding.Base64)
