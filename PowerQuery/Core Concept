@@ -1,24 +1,24 @@
 
-List
+1. List -- more like a column in a table
 
-{ }
+{ }  
 
-Record
+2. Record -- more like a row in a table
 
 [ name = Lufeng, age = 48 ]
 
-Table
+3. Table
 
 
 
-Iterator
+4. Iterator
 	
 A function with a function as an input, usually is an integrator.
 like: 
 	addcolumne
 	table.transform
 
-function
+5.function
 
  each _  that equal to (_)=> 
 here _ is a input parameter and represent the current iterate item like current row, current record
