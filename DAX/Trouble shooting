@@ -1,0 +1,5 @@
+1.  There were not enough elements in the enumeration to complete the operation.
+
+Data source error: Expression.Error: There weren t enough elements in the enumeration to complete the operation.. #table({ Content , Name , Extension , Date accessed , Date modified , Date created , Attributes , Folder Path , Year }, {}). Microsoft.Data.Mashup.ErrorCode = 10063. Detail = #table({ Content , Name , Extension , Date accessed , Date modified , Date created , Attributes , Folder Path , Year }, {}). ;There weren t enough elements in the enumeration to complete the operation.. The exception was raised by the IDbCommand interface. Cluster URI: WABI-CANADA-CENTRAL-redirect.analysis.windows.net Activity ID: 1b80f18c-d489-4d1a-93f3-9dae4a4ef276 Request ID: adac50d4-9aa2-48ba-9561-2436507c6064 Time: 2026-01-09 05:45:46Z
+
+
